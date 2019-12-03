@@ -1,0 +1,61 @@
+=========APP==========
+
+
+PUBLIC CLASS HELPER{
+
+	PUBLIC STATIC ENTITY BD = NEW ENTITY();
+
+}
+
+
+
+
+FORM{
+
+	DATAGRIDVIEW.DATASOURCE = (FROM D IN HELPER.BD.USER.TOLIST()
+SELECT NEW{
+	ID= D.ID
+	D.NOME,
+
+
+}.TOLIST():
+
+)
+}
+
+EXECUTAVEL
+
+PLAY - PASTA DEBUG - ARQUIVOS PARA INSTALADOR
+
+BANCO - GERAR SCRIPT - JOGA NA PASTA - ]
+
+ARQUIVO BAT
+
+- sqlcmd -S .\SQLEXPRESS -I "CAMINHO PRO SQL- X86\ALAINS\SQL.SQL" E SALVA COM BAT.BAT
+
+inno setup  
+create a new script file
+
+nome do programa aulains
+
+browse - debug
+
+addfile bat e outro
+add folder debug
+
+tira a create 
+
+
+penultima antepultima
+
+license
+
+desmarca yes, use
+
+
+embaixo de tasks
+
+[setup]
+privila = admin
+
+no segundo do run coloca o \bat.bat statusmsg: instalando banco

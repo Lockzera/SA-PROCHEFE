@@ -1,0 +1,595 @@
+/*    ==Parâmetros de Script==
+
+    Versão do Servidor de Origem : SQL Server 2017 (14.0.1000)
+    Edição do Mecanismo de Banco de Dados de Origem : Microsoft SQL Server Express Edition
+    Tipo do Mecanismo de Banco de Dados de Origem : SQL Server Autônomo
+
+    Versão do Servidor de Destino : SQL Server 2017
+    Edição de Mecanismo de Banco de Dados de Destino : Microsoft SQL Server Standard Edition
+    Tipo de Mecanismo de Banco de Dados de Destino : SQL Server Autônomo
+*/
+
+USE [master]
+GO
+/****** Object:  Database [pro_chefe]    Script Date: 02/12/2019 11:01:46 ******/
+CREATE DATABASE [pro_chefe]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'pro_chefe', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\pro_chefe.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'pro_chefe_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\pro_chefe_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+ALTER DATABASE [pro_chefe] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [pro_chefe].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [pro_chefe] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [pro_chefe] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [pro_chefe] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [pro_chefe] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [pro_chefe] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [pro_chefe] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [pro_chefe] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [pro_chefe] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [pro_chefe] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [pro_chefe] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [pro_chefe] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [pro_chefe] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [pro_chefe] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [pro_chefe] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [pro_chefe] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [pro_chefe] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [pro_chefe] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [pro_chefe] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [pro_chefe] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [pro_chefe] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [pro_chefe] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [pro_chefe] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [pro_chefe] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [pro_chefe] SET  MULTI_USER 
+GO
+ALTER DATABASE [pro_chefe] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [pro_chefe] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [pro_chefe] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [pro_chefe] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [pro_chefe] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [pro_chefe] SET QUERY_STORE = OFF
+GO
+USE [pro_chefe]
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = ON;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET LEGACY_CARDINALITY_ESTIMATION = OFF;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET LEGACY_CARDINALITY_ESTIMATION = PRIMARY;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 0;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET MAXDOP = PRIMARY;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET PARAMETER_SNIFFING = ON;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET PARAMETER_SNIFFING = PRIMARY;
+GO
+ALTER DATABASE SCOPED CONFIGURATION SET QUERY_OPTIMIZER_HOTFIXES = OFF;
+GO
+ALTER DATABASE SCOPED CONFIGURATION FOR SECONDARY SET QUERY_OPTIMIZER_HOTFIXES = PRIMARY;
+GO
+USE [pro_chefe]
+GO
+/****** Object:  Table [dbo].[categoria]    Script Date: 02/12/2019 11:01:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[categoria](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_categoria] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[cliente]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cliente](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](200) NOT NULL,
+	[telefone] [varchar](50) NOT NULL,
+	[cpf] [varchar](50) NOT NULL,
+	[cep] [varchar](50) NOT NULL,
+	[logradouro] [varchar](255) NOT NULL,
+	[numero] [varchar](50) NOT NULL,
+	[complemento] [varchar](255) NULL,
+	[bairro] [varchar](50) NOT NULL,
+	[uf] [varchar](50) NOT NULL,
+	[cidade] [varchar](255) NOT NULL,
+	[imagem] [varchar](50) NULL,
+ CONSTRAINT [PK_cliente] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[delivery]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[delivery](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[id_pedido] [int] NOT NULL,
+	[id_cliente] [int] NOT NULL,
+	[id_entregador] [int] NOT NULL,
+	[processamento] [bit] NOT NULL,
+ CONSTRAINT [PK_delivery] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ingrediente]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ingrediente](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](60) NOT NULL,
+	[estoque] [int] NULL,
+	[medida] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_ingredientes] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[itens_pedido]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[itens_pedido](
+	[id_pedido] [int] NOT NULL,
+	[id_produto] [int] NOT NULL,
+	[quantidade] [int] NOT NULL,
+ CONSTRAINT [PK_itens_pedido] PRIMARY KEY CLUSTERED 
+(
+	[id_pedido] ASC,
+	[id_produto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[mesa]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[mesa](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[capacidade] [int] NOT NULL,
+	[disponibilidade] [bit] NOT NULL,
+	[observacao] [varchar](255) NULL,
+ CONSTRAINT [PK_mesa] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[pedido]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[pedido](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[data] [datetime2](7) NOT NULL,
+	[id_mesa] [int] NULL,
+	[id_cliente] [int] NULL,
+	[finalizado] [bit] NOT NULL,
+ CONSTRAINT [PK_Pedido] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[produto]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[produto](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](50) NOT NULL,
+	[descricao] [varchar](255) NULL,
+	[preco] [decimal](18, 2) NOT NULL,
+	[id_categoria] [int] NOT NULL,
+	[imagem] [varchar](50) NULL,
+ CONSTRAINT [PK_produto] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[produto_ingrediente]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[produto_ingrediente](
+	[id_produto] [int] NOT NULL,
+	[id_ingrediente] [int] NOT NULL,
+	[preco_saida] [decimal](18, 2) NULL,
+ CONSTRAINT [PK_produto_ingrediente_1] PRIMARY KEY CLUSTERED 
+(
+	[id_produto] ASC,
+	[id_ingrediente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tipo_usuario]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tipo_usuario](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_tipo_usuario] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[usuario]    Script Date: 02/12/2019 11:01:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[usuario](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nome] [varchar](60) NOT NULL,
+	[login] [char](8) NULL,
+	[senha] [char](8) NULL,
+	[tipo_usuario] [int] NOT NULL,
+ CONSTRAINT [PK_usuario_1] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[categoria] ON 
+GO
+INSERT [dbo].[categoria] ([id], [nome]) VALUES (1, N'Pizza')
+GO
+INSERT [dbo].[categoria] ([id], [nome]) VALUES (2, N'Lanche')
+GO
+INSERT [dbo].[categoria] ([id], [nome]) VALUES (3, N'Bebida')
+GO
+SET IDENTITY_INSERT [dbo].[categoria] OFF
+GO
+SET IDENTITY_INSERT [dbo].[cliente] ON 
+GO
+INSERT [dbo].[cliente] ([id], [nome], [telefone], [cpf], [cep], [logradouro], [numero], [complemento], [bairro], [uf], [cidade], [imagem]) VALUES (1, N'Hiago Campregher', N' 47  99621 8619', N'333 333 333 33', N'89041 450', N'Rua Reinoldo Althoff', N'111', N'casa', N'Velha', N'SC', N'Blumenau', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[cliente] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ingrediente] ON 
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (1, N'Calabresa', 500, N'g')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (2, N'Milho', 1, N'Kg')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (3, N'Brocolis', 100, N'g')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (4, N'Cogumelo', 100, N'g')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (5, N'Doritos', 100, N'g')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (6, N'Ervilha', 100, N'g')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (7, N'Queijo cheddar', 8, N'Fatia')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (8, N'Massa de tomate', 100, N'g')
+GO
+INSERT [dbo].[ingrediente] ([id], [nome], [estoque], [medida]) VALUES (9, N'Oregano', 1, N'Kg')
+GO
+SET IDENTITY_INSERT [dbo].[ingrediente] OFF
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (1, 1, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (2, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (3, 2, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (4, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (5, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (6, 2, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (7, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (8, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (9, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (10, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (11, 2, 3)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (12, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (13, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (14, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (15, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (16, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (17, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (18, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (19, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (20, 2, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (21, 2, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (22, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (23, 2, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (24, 1, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (25, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (26, 2, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (27, 1, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (28, 2, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (29, 2, 1)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (30, 2, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (31, 3, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (32, 4, 2)
+GO
+INSERT [dbo].[itens_pedido] ([id_pedido], [id_produto], [quantidade]) VALUES (33, 5, 2)
+GO
+SET IDENTITY_INSERT [dbo].[mesa] ON 
+GO
+INSERT [dbo].[mesa] ([id], [capacidade], [disponibilidade], [observacao]) VALUES (1, 10, 1, N'muito confortavel')
+GO
+INSERT [dbo].[mesa] ([id], [capacidade], [disponibilidade], [observacao]) VALUES (2, 2, 1, N'boa')
+GO
+INSERT [dbo].[mesa] ([id], [capacidade], [disponibilidade], [observacao]) VALUES (4, 2, 1, NULL)
+GO
+INSERT [dbo].[mesa] ([id], [capacidade], [disponibilidade], [observacao]) VALUES (5, 4, 1, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[mesa] OFF
+GO
+SET IDENTITY_INSERT [dbo].[pedido] ON 
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (1, CAST(N'2019-12-02T09:24:03.6390957' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (2, CAST(N'2019-12-02T09:24:15.2925921' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (3, CAST(N'2019-12-02T09:35:19.5602577' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (4, CAST(N'2019-12-02T09:37:23.5894700' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (5, CAST(N'2019-12-02T09:39:27.8927892' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (6, CAST(N'2019-12-02T09:39:34.0163160' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (7, CAST(N'2019-12-02T09:40:11.5071900' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (8, CAST(N'2019-12-02T09:47:44.1030881' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (9, CAST(N'2019-12-02T09:48:52.1338973' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (10, CAST(N'2019-12-02T09:50:09.9997492' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (11, CAST(N'2019-12-02T09:50:18.6383346' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (12, CAST(N'2019-12-02T09:51:01.5662278' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (13, CAST(N'2019-12-02T09:51:26.9273993' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (14, CAST(N'2019-12-02T09:51:56.8558540' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (15, CAST(N'2019-12-02T09:53:19.8358700' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (16, CAST(N'2019-12-02T09:54:21.8710176' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (17, CAST(N'2019-12-02T09:56:27.0910111' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (18, CAST(N'2019-12-02T09:58:09.7171378' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (19, CAST(N'2019-12-02T09:59:31.7376273' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (20, CAST(N'2019-12-02T09:59:37.5956183' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (21, CAST(N'2019-12-02T09:59:49.7490259' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (22, CAST(N'2019-12-02T10:04:07.1336139' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (23, CAST(N'2019-12-02T10:04:14.9911597' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (24, CAST(N'2019-12-02T10:06:17.5937853' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (25, CAST(N'2019-12-02T10:06:24.2484893' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (26, CAST(N'2019-12-02T10:06:29.4035232' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (27, CAST(N'2019-12-02T10:13:59.7143987' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (28, CAST(N'2019-12-02T10:14:04.6701391' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (29, CAST(N'2019-12-02T10:14:09.8821967' AS DateTime2), 1, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (30, CAST(N'2019-12-02T10:48:02.6970523' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (31, CAST(N'2019-12-02T10:48:06.8080574' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (32, CAST(N'2019-12-02T10:48:09.1029161' AS DateTime2), 2, NULL, 1)
+GO
+INSERT [dbo].[pedido] ([id], [data], [id_mesa], [id_cliente], [finalizado]) VALUES (33, CAST(N'2019-12-02T10:48:11.3030311' AS DateTime2), 2, NULL, 1)
+GO
+SET IDENTITY_INSERT [dbo].[pedido] OFF
+GO
+SET IDENTITY_INSERT [dbo].[produto] ON 
+GO
+INSERT [dbo].[produto] ([id], [nome], [descricao], [preco], [id_categoria], [imagem]) VALUES (1, N'Pizza de calabresa', N'', CAST(40.00 AS Decimal(18, 2)), 1, NULL)
+GO
+INSERT [dbo].[produto] ([id], [nome], [descricao], [preco], [id_categoria], [imagem]) VALUES (2, N'Pizza de milho', N'', CAST(30.00 AS Decimal(18, 2)), 1, NULL)
+GO
+INSERT [dbo].[produto] ([id], [nome], [descricao], [preco], [id_categoria], [imagem]) VALUES (3, N'Pizza de queijo', NULL, CAST(35.00 AS Decimal(18, 2)), 1, NULL)
+GO
+INSERT [dbo].[produto] ([id], [nome], [descricao], [preco], [id_categoria], [imagem]) VALUES (4, N'Pizza de brocolis', NULL, CAST(37.00 AS Decimal(18, 2)), 1, NULL)
+GO
+INSERT [dbo].[produto] ([id], [nome], [descricao], [preco], [id_categoria], [imagem]) VALUES (5, N'Pizza de oregano', NULL, CAST(50.00 AS Decimal(18, 2)), 1, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[produto] OFF
+GO
+INSERT [dbo].[produto_ingrediente] ([id_produto], [id_ingrediente], [preco_saida]) VALUES (1, 1, NULL)
+GO
+INSERT [dbo].[produto_ingrediente] ([id_produto], [id_ingrediente], [preco_saida]) VALUES (2, 2, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[tipo_usuario] ON 
+GO
+INSERT [dbo].[tipo_usuario] ([id], [nome]) VALUES (1, N'admin')
+GO
+INSERT [dbo].[tipo_usuario] ([id], [nome]) VALUES (2, N'usuario')
+GO
+INSERT [dbo].[tipo_usuario] ([id], [nome]) VALUES (3, N'entregador')
+GO
+SET IDENTITY_INSERT [dbo].[tipo_usuario] OFF
+GO
+SET IDENTITY_INSERT [dbo].[usuario] ON 
+GO
+INSERT [dbo].[usuario] ([id], [nome], [login], [senha], [tipo_usuario]) VALUES (1, N'admin', N'admin   ', N'123     ', 1)
+GO
+SET IDENTITY_INSERT [dbo].[usuario] OFF
+GO
+ALTER TABLE [dbo].[delivery] ADD  CONSTRAINT [DF_delivery_processamento]  DEFAULT ((0)) FOR [processamento]
+GO
+ALTER TABLE [dbo].[pedido] ADD  CONSTRAINT [DF_pedido_finalizado]  DEFAULT ((0)) FOR [finalizado]
+GO
+ALTER TABLE [dbo].[delivery]  WITH CHECK ADD  CONSTRAINT [FK_entregador_delivery] FOREIGN KEY([id_entregador])
+REFERENCES [dbo].[usuario] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[delivery] CHECK CONSTRAINT [FK_entregador_delivery]
+GO
+ALTER TABLE [dbo].[delivery]  WITH CHECK ADD  CONSTRAINT [FK_pedido_delivery] FOREIGN KEY([id_pedido])
+REFERENCES [dbo].[pedido] ([id])
+GO
+ALTER TABLE [dbo].[delivery] CHECK CONSTRAINT [FK_pedido_delivery]
+GO
+ALTER TABLE [dbo].[itens_pedido]  WITH CHECK ADD  CONSTRAINT [FK_itens_pedido] FOREIGN KEY([id_pedido])
+REFERENCES [dbo].[pedido] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[itens_pedido] CHECK CONSTRAINT [FK_itens_pedido]
+GO
+ALTER TABLE [dbo].[itens_pedido]  WITH CHECK ADD  CONSTRAINT [FK_itens_produto] FOREIGN KEY([id_produto])
+REFERENCES [dbo].[produto] ([id])
+GO
+ALTER TABLE [dbo].[itens_pedido] CHECK CONSTRAINT [FK_itens_produto]
+GO
+ALTER TABLE [dbo].[pedido]  WITH CHECK ADD  CONSTRAINT [FK_cliente_pedido] FOREIGN KEY([id_cliente])
+REFERENCES [dbo].[cliente] ([id])
+GO
+ALTER TABLE [dbo].[pedido] CHECK CONSTRAINT [FK_cliente_pedido]
+GO
+ALTER TABLE [dbo].[pedido]  WITH CHECK ADD  CONSTRAINT [FK_mesa_Pedido] FOREIGN KEY([id_mesa])
+REFERENCES [dbo].[mesa] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[pedido] CHECK CONSTRAINT [FK_mesa_Pedido]
+GO
+ALTER TABLE [dbo].[produto]  WITH CHECK ADD  CONSTRAINT [FK_produto_categoria] FOREIGN KEY([id_categoria])
+REFERENCES [dbo].[categoria] ([id])
+GO
+ALTER TABLE [dbo].[produto] CHECK CONSTRAINT [FK_produto_categoria]
+GO
+ALTER TABLE [dbo].[produto]  WITH CHECK ADD  CONSTRAINT [FK_produto_produto] FOREIGN KEY([id])
+REFERENCES [dbo].[produto] ([id])
+GO
+ALTER TABLE [dbo].[produto] CHECK CONSTRAINT [FK_produto_produto]
+GO
+ALTER TABLE [dbo].[produto_ingrediente]  WITH CHECK ADD  CONSTRAINT [FK_ingrediente_produto_ingrediente] FOREIGN KEY([id_ingrediente])
+REFERENCES [dbo].[ingrediente] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[produto_ingrediente] CHECK CONSTRAINT [FK_ingrediente_produto_ingrediente]
+GO
+ALTER TABLE [dbo].[produto_ingrediente]  WITH CHECK ADD  CONSTRAINT [FK_produto_produto_ingrediente] FOREIGN KEY([id_produto])
+REFERENCES [dbo].[produto] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[produto_ingrediente] CHECK CONSTRAINT [FK_produto_produto_ingrediente]
+GO
+ALTER TABLE [dbo].[usuario]  WITH CHECK ADD  CONSTRAINT [FK_tipo_usuario] FOREIGN KEY([tipo_usuario])
+REFERENCES [dbo].[tipo_usuario] ([id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[usuario] CHECK CONSTRAINT [FK_tipo_usuario]
+GO
+ALTER TABLE [dbo].[usuario]  WITH CHECK ADD  CONSTRAINT [FK_usuario_usuario] FOREIGN KEY([id])
+REFERENCES [dbo].[usuario] ([id])
+GO
+ALTER TABLE [dbo].[usuario] CHECK CONSTRAINT [FK_usuario_usuario]
+GO
+USE [master]
+GO
+ALTER DATABASE [pro_chefe] SET  READ_WRITE 
+GO

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="081031ea5fce4b13bfe73079210c4752" Name="Diagram1">
+        <EntityTypeShape EntityType="pro_chefeModel.categoria" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="pro_chefeModel.cliente" Width="1.5" PointX="0.75" PointY="7.25" />
+        <EntityTypeShape EntityType="pro_chefeModel.delivery" Width="1.5" PointX="10.25" PointY="8.375" />
+        <EntityTypeShape EntityType="pro_chefeModel.ingrediente" Width="1.5" PointX="3" PointY="12.75" />
+        <EntityTypeShape EntityType="pro_chefeModel.itens_pedido" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="pro_chefeModel.mesa" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="pro_chefeModel.pedido" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="pro_chefeModel.produto" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="pro_chefeModel.produto_ingrediente" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="pro_chefeModel.tipo_usuario" Width="1.5" PointX="5.75" PointY="7.875" />
+        <EntityTypeShape EntityType="pro_chefeModel.usuario" Width="1.5" PointX="8" PointY="7.25" />
+        <AssociationConnector Association="pro_chefeModel.FK_produto_categoria" />
+        <AssociationConnector Association="pro_chefeModel.FK_cliente_pedido" />
+        <AssociationConnector Association="pro_chefeModel.FK_entregador_delivery" />
+        <AssociationConnector Association="pro_chefeModel.FK_pedido_delivery" />
+        <AssociationConnector Association="pro_chefeModel.FK_ingrediente_produto_ingrediente" />
+        <AssociationConnector Association="pro_chefeModel.FK_itens_pedido" />
+        <AssociationConnector Association="pro_chefeModel.FK_itens_produto" />
+        <AssociationConnector Association="pro_chefeModel.FK_mesa_Pedido" />
+        <AssociationConnector Association="pro_chefeModel.FK_produto_produto" />
+        <AssociationConnector Association="pro_chefeModel.FK_produto_produto_ingrediente" />
+        <AssociationConnector Association="pro_chefeModel.FK_tipo_usuario" />
+        <AssociationConnector Association="pro_chefeModel.FK_usuario_usuario" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
